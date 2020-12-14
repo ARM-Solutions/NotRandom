@@ -1,0 +1,16 @@
+#!/bin/bash
+
+exIN="$@"
+
+if [ -z "$@" ]; then
+	exIN="10"
+fi
+
+seed="20202021212122222222222224242425252526262627272828282929290a"
+unpacked="$(echo $seed | tr 2 3 | xxd -r -ps)"
+length="$(($(echo "$unpacked" | wc -c)-1))"
+
+for I in $(seq $exIN); do
+	selector="$(($RANDOM%$length))"
+	echo ${unpacked:$selector:1}
+done
